@@ -2,13 +2,11 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 
 import {
-  FriendsList,
-  PrivateRoute
-} from './components';
-
-import {
   Header,
-  Login
+  Login,
+  FriendsList,
+  Form,
+  PrivateRoute
 } from './components';
 
 const App = _ => (
@@ -21,6 +19,10 @@ const App = _ => (
     <PrivateRoute
       path="/friends"
       component={FriendsList}
+    />
+    <PrivateRoute
+      path="/add"
+      component={Form}
     />
   </>
 );

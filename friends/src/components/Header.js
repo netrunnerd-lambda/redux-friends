@@ -1,29 +1,49 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { logout } from '../store/actions';
 
-const Header = props => {
-  return (
-    <header>
-      <h1>FriendSpace</h1>
-      {props.isLoggedIn &&
-        <nav>
-          <Link to="/" onClick={_ => props.logout()}>
-            Logout
-          </Link>
-        </nav>
-      }
-    </header>
-  );
+class Header extends Component {
+  handleLogout = e => {
+    this.props.logout();
+  };
+
+  render() {
+    const token = localStorage.getItem('token');
+
+    const unregNav = (
+      <nav>
+        <Link to="/sign-up">
+          Sign Up
+        </Link>
+      </nav>
+    );
+
+    const userNav = (
+      <nav>
+        <Link to="/add">
+          Add
+        </Link>
+        <Link to="/friends">
+          List
+        </Link>
+        <Link to="/" onClick={this.handleLogout}>
+          Logout
+        </Link>
+      </nav>
+    );
+
+    return (
+      <header>
+        <h1>FriendSpace</h1>
+        {token ? userNav : unregNav}
+      </header>
+    );
+  }
 }
 
-const mapState = state => ({
-  isLoggedIn: state.isLoggedIn
-});
-
 export default connect(
-  mapState,
+  null,
   { logout }
 )(Header);
