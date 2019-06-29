@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import {
-  addFriend
+  addFriend,
+  updateFriend
 } from '../store/actions';
 
 class Form extends Component {
   state = {
-    friend: {
+    friend: this.props.activeFriend || {
       name: '',
       age: '',
       email: ''
@@ -24,21 +25,24 @@ class Form extends Component {
   handleSubmit = e => {
     e.preventDefault();
 
-    const { name, age, email } = this.state.friend;
+    const { id, name, age, email } = this.state.friend;
 
     if (!name || !age || !email)
       return;
     
-    this.props.addFriend(this.state.friend)
-              .then(this.props.history.push('/friends'));
-    
-    const friend = {
-      name: '',
-      age: '',
-      email: ''
-    };
+    if (this.props.activeFriend) {
+      const friend = {
+        name,
+        age,
+        email
+      };
 
-    this.setState({ friend });
+      this.props.updateFriend(id, friend);
+    } else {
+      this.props.addFriend(this.state.friend)
+    }
+
+    this.props.history.push('/friends');
   };
 
   render() {
@@ -68,7 +72,7 @@ class Form extends Component {
           value={this.state.friend.email}
         />
         <button type="submit">
-          {this.props.updatingFriend ? 'UPDATE' : 'ADD'} FRIEND
+          {this.props.activeFriend ? 'UPDATE' : 'ADD'} FRIEND
         </button>
       </form>
     );
@@ -76,10 +80,14 @@ class Form extends Component {
 }
 
 const mapState = state => ({
+  activeFriend: state.activeFriend,
   error: state.error
 });
 
 export default connect(
   mapState,
-  { addFriend }
+  {
+    addFriend,
+    updateFriend
+  }
 )(Form);

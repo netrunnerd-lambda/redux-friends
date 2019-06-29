@@ -3,16 +3,20 @@ import { connect } from 'react-redux';
 
 import {
   deleteFriend,
-  fetchFriends
+  fetchFriends,
+  setActiveFriend
 } from '../store/actions';
 
 import { Friend } from './Friend';
 
 class FriendsList extends Component {
-  handleClick = (e, id) => {
+  handleClick = (e, friend) => {
     switch (e.target.name) {
       case 'DELETE':
-        return this.props.deleteFriend(id);
+        return this.props.deleteFriend(friend.id);
+      case 'UPDATE':
+        this.props.setActiveFriend(friend);
+        return this.props.history.push('/update');
       default:
         return console.log('i like unicorns');
     }
@@ -34,7 +38,7 @@ class FriendsList extends Component {
         {this.props.friends.map(f => <Friend
           key={f.id}
           {...f}
-          onClick={e => this.handleClick(e, f.id)} 
+          onClick={e => this.handleClick(e, {...f})} 
         />)}
       </main>
     );
@@ -50,6 +54,7 @@ export default connect(
   mapState,
   {
     deleteFriend,
-    fetchFriends
+    fetchFriends,
+    setActiveFriend
   }
 )(FriendsList);

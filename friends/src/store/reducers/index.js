@@ -11,16 +11,22 @@ import {
   LOGIN_START,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
-  LOGOUT
+  LOGOUT,
+  SET_ACTIVE_FRIEND,
+  UPDATE_FRIEND_START,
+  UPDATE_FRIEND_SUCCESS,
+  UPDATE_FRIEND_FAILURE
 } from '../actions/actionTypes';
 
 const initialState = {
+  activeFriend: null,
   addingFriend: null,
   deletingFriend: null,
   error: null,
   friends: [],
   isFetching: null,
   isLoggingIn: null,
+  updatingFriend: null,
   userToken: null
 };
 
@@ -98,6 +104,28 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         friends: [],
         userToken: null
+      };
+    case SET_ACTIVE_FRIEND:
+      return {
+        ...state,
+        activeFriend: action.payload
+      };
+    case UPDATE_FRIEND_START:
+      return {
+        ...state,
+        updatingFriend: true,
+      };
+    case UPDATE_FRIEND_SUCCESS:
+      return {
+        ...state,
+        activeFriend: null,
+        friends: action.payload,
+        updatingFriend: false
+      };
+    case UPDATE_FRIEND_FAILURE:
+      return {
+        ...state,
+        error: action.payload
       };
     default:
       return state;

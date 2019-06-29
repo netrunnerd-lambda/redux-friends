@@ -24,6 +24,10 @@ const App = _ => (
       exact path="/add"
       component={Form}
     />
+    <PrivateRoute
+      exact path="/update"
+      component={Form}
+    />
   </>
 );
 

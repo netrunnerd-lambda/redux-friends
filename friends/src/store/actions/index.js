@@ -14,7 +14,11 @@ import {
   LOGIN_START,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
-  LOGOUT
+  LOGOUT,
+  SET_ACTIVE_FRIEND,
+  UPDATE_FRIEND_START,
+  UPDATE_FRIEND_SUCCESS,
+  UPDATE_FRIEND_FAILURE
 } from './actionTypes';
 
 const endpoint = 'http://localhost:5000/api';
@@ -82,3 +86,22 @@ export const login = creds => dispatch => {
 export const logout = _ => ({
   type: LOGOUT
 });
+
+export const setActiveFriend = friend => ({
+  type: SET_ACTIVE_FRIEND,
+  payload: friend
+});
+
+export const updateFriend = (id, friend) => dispatch => {
+  dispatch({ type: UPDATE_FRIEND_START });
+
+  return withAuth().put(`${endpoint}/friends/${id}`, friend)
+                   .then(({ data }) => dispatch({
+                     type: UPDATE_FRIEND_SUCCESS,
+                     payload: data
+                   }))
+                   .catch(err => dispatch({
+                     type: UPDATE_FRIEND_FAILURE,
+                     payload: err.response.data.error
+                   }));
+};
