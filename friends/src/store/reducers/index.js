@@ -1,4 +1,7 @@
 import {
+  ADD_FRIEND_FAILURE,
+  ADD_FRIEND_START,
+  ADD_FRIEND_SUCCESS,
   DELETE_FRIEND_START,
   DELETE_FRIEND_SUCCESS,
   DELETE_FRIEND_FAILURE,
@@ -12,6 +15,7 @@ import {
 } from '../actions/actionTypes';
 
 const initialState = {
+  addingFriend: null,
   deletingFriend: null,
   error: null,
   friends: [],
@@ -22,6 +26,23 @@ const initialState = {
 
 export const rootReducer = (state = initialState, action) => {
   switch (action.type) {
+    case ADD_FRIEND_START:
+      return {
+        ...state,
+        addingFriend: true
+      };
+    case ADD_FRIEND_SUCCESS:
+      return {
+        ...state,
+        addingFriend: false,
+        friends: action.payload
+      };
+    case ADD_FRIEND_FAILURE:
+      return {
+        ...state,
+        addingFriend: false,
+        error: action.payload
+      };
     case DELETE_FRIEND_START:
       return {
         ...state,

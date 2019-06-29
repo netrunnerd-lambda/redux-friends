@@ -2,6 +2,9 @@ import axios from 'axios';
 import withAuth from './auth';
 
 import {
+  ADD_FRIEND_START,
+  ADD_FRIEND_SUCCESS,
+  ADD_FRIEND_FAILURE,
   DELETE_FRIEND_START,
   DELETE_FRIEND_SUCCESS,
   DELETE_FRIEND_FAILURE,
@@ -15,6 +18,20 @@ import {
 } from './actionTypes';
 
 const endpoint = 'http://localhost:5000/api';
+
+export const addFriend = friend => dispatch => {
+  dispatch({ type: ADD_FRIEND_START });
+
+  return withAuth().post(`${endpoint}/friends`, friend)
+                   .then(({ data }) => dispatch({
+                     type: ADD_FRIEND_SUCCESS,
+                     payload: data
+                   }))
+                   .catch(err => dispatch({
+                     type: ADD_FRIEND_FAILURE,
+                     payload: err.response.data.error
+                   }));
+}
 
 export const deleteFriend = id => dispatch => {
   dispatch({ type: DELETE_FRIEND_START });
