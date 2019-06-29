@@ -16,7 +16,8 @@ const initialState = {
   error: null,
   friends: [],
   isFetching: null,
-  isLoggingIn: null
+  isLoggingIn: null,
+  userToken: null
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -62,7 +63,8 @@ export const rootReducer = (state = initialState, action) => {
     case LOGIN_SUCCESS:
       return {
         ...state,
-        isLoggingIn: false
+        isLoggingIn: false,
+        userToken: action.payload
       };
     case LOGIN_FAILURE:
       return {
@@ -74,6 +76,7 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         friends: [],
+        userToken: null
       };
     default:
       return state;

@@ -10,16 +10,6 @@ class Header extends Component {
   };
 
   render() {
-    const token = localStorage.getItem('token');
-
-    const unregNav = (
-      <nav>
-        <Link to="/sign-up">
-          Sign Up
-        </Link>
-      </nav>
-    );
-
     const userNav = (
       <nav>
         <Link to="/add">
@@ -37,13 +27,17 @@ class Header extends Component {
     return (
       <header>
         <h1>FriendSpace</h1>
-        {token ? userNav : unregNav}
+        {this.props.token || localStorage.getItem('token') ? userNav : null}
       </header>
     );
   }
 }
 
+const mapState = state => ({
+  token: state.userToken
+});
+
 export default connect(
-  null,
+  mapState,
   { logout }
 )(Header);

@@ -17,11 +17,11 @@ const App = _ => (
       component={Login}
     />
     <PrivateRoute
-      path="/friends"
+      exact path="/friends"
       component={FriendsList}
     />
     <PrivateRoute
-      path="/add"
+      exact path="/add"
       component={Form}
     />
   </>

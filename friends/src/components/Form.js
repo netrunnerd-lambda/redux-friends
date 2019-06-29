@@ -5,10 +5,16 @@ class Form extends Component {
   render() {
     return (
       <form>
-        am form
+        <input
+          type="text"
+        />
+        <input
+          type="text"
+        />
+        <button type="submit">
+          ADD
+        </button>
       </form>
     );
   }
 }
-
-export default Form;
