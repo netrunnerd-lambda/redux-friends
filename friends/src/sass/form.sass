@@ -1,0 +1,30 @@
+.login, .opForm
+  align-items: center
+  display: flex
+  flex-flow: column
+  margin: 5rem auto
+  max-width: 420px
+
+  button, input
+    background: $color00
+    border: none
+    color: $color01
+    margin: 0.5rem 0
+    padding: 0.5rem
+
+  button
+    cursor: pointer
+    transition: 0.25s
+    width: 50%
+
+    &:hover
+      background: $color02
+
+  input
+    border: 5px solid $color00
+    width: 100%;
+
+  p
+    color: $color03
+    font-variant: small-caps
+    text-transform: lowercase
